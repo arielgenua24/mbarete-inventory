@@ -6,6 +6,7 @@ import firebaseConfig from '../firebaseConfig'; // Importa tu configuración
 
 // Inicializar Firebase
 const app = initializeApp(firebaseConfig);
+console.log(app)
 
 // Obtener servicios
 const auth = getAuth(app);
