@@ -32,14 +32,14 @@ function Home() {
                     marginBottom: '20px', 
                     color: '#c4c4c4', 
                     position: 'absolute',
-                    padding: '12px',
+                    padding: '20px',
                     top: '13px'
                     }}>
-                    Bienvenida a tu sistema de inventario Reina👑
+                    Hola Majo! que te gustaria hacer hoy ?
                 </h1>
 
-
-            <Link to="/inbox" className="home-link">
+            {/*
+                <Link to="/inbox" className="home-link">
                 <button className="home-btn inbox">
                     <Inbox size={24} className="home-icon" />
                     Dinero y notificaciones
@@ -64,12 +64,14 @@ function Home() {
                     </button>
                 </Link>
             </div>
+            
+            */}
 
             <Link to="/inventory" className="home-link">
                 <button className="home-btn catalog">
                     <Package size={24} className="home-icon" />
-                    Catálogo
-                    <span className="home-subtext">Agrega tus productos y controla tu stock</span>
+                    <h1 style={{fontSize: '400', color: '#04e9a2'}} >Catálogo</h1>
+                    <span className="home-subtext">Agrega y controla los productos de tu pagina</span>
                 </button>
             </Link>
         </div>
