@@ -25,17 +25,19 @@ const useFirestore = () => {
   const formattedDate = format(currentDate, 'yyyy-MM-dd HH:mm:ss', { locale: es });
 
   //OKAY, producto agregado
-  const addProduct = async (name, price, size, color, stock) => {
+  const addProduct = async (name, price, size, color, category, stock) => {
     try {
         //obtenemos el codigo de el producto
     const productCode = await incrementProductCode();  
     console.log(productCode);
+    console.log(category)
       const docRef = await addDoc(collection(db, "products"), {
         productCode,
         name,
         price,
         size,
         color,
+        category,
         stock,
         updatedAt: formattedDate,
       });
@@ -46,6 +48,39 @@ const useFirestore = () => {
       console.error("Error agregando producto: ", e);
     }
   };
+
+  /*const addProduct = async (name, price, category, specialTag, images, sizes) => {
+    try {
+      // Obtener el código del producto
+      const productCode = await incrementProductCode();
+      
+      const newProduct = {
+        productCode,
+        name,
+        category, // Ahora se recibe como parámetro
+        specialTag,
+        images, // Recibe un objeto con img1, img2, img3
+        price,
+        state: "", // Por defecto vacío
+        sizes, // Un array de objetos con { size, quantity }
+        updatedAt: formattedDate
+      };
+  
+      // Guardar en Firestore
+      const docRef = await addDoc(collection(db, "products"), newProduct);
+      console.log("Producto agregado con ID:", docRef.id);
+  
+      // Obtener todos los productos actualizados
+      const productsSnapshot = await getDocs(collection(db, "products"));
+      const products = productsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  
+      return products; // Devuelve el array de productos
+    } catch (e) {
+      console.error("Error agregando producto:", e);
+      return [];
+    }
+  }; */
+
 
   // Obtener todos los products
   const getProducts = async () => {

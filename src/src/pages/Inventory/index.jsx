@@ -49,12 +49,12 @@ const Inventory = () => {
   const handleSubmit = async (e) => {
     setIsLoading(true);
     e.preventDefault();
-    await addProduct(newProduct.name, newProduct.price, newProduct.size, newProduct.color, newProduct.stock);
+    await addProduct(newProduct.name, newProduct.price, newProduct.size, newProduct.color, newProduct.category, newProduct.stock);
     setIsModalOpen(false);
     const updatedProducts = await getProducts();
     setProducts(updatedProducts);
     //reset newProduct state
-    setNewProduct({ name: '', price: '', size: '', color: '', stock: '' });
+    setNewProduct({ name: '', price: '', size: '', color: '', category: '' ,stock: '' });
     setIsLoading(false);
   };
   const handleDelete = async (productId) => {
