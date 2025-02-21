@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import searchProducts from '../../utils/searchFn';
 import useFirestoreContext from '../../hooks/useFirestoreContext';
 import LoadingComponent from '../../components/Loading';
+import showSuggestionNotification from '../../utils/showSuggestionNotification';
 import './styles.css';
 
 function ProductFormModal({ handleSubmit, newProduct, setNewProduct, setIsModalOpen }) {
@@ -53,6 +54,9 @@ function ProductFormModal({ handleSubmit, newProduct, setNewProduct, setIsModalO
       category: suggestion.category,
     });
     setSuggestions([]);
+    
+    // Mostrar la notificación
+    showSuggestionNotification();
   };
 
   return (
@@ -66,23 +70,30 @@ function ProductFormModal({ handleSubmit, newProduct, setNewProduct, setIsModalO
           <label className="label">Nombre del producto</label>
           <input
             type="text"
-            value={newProduct.name}
+            //this in is broken after chosing a recommendation
+            value={suggestion.name || newProduct.name}
             onChange={handleNameChange}
             className="input"
-            required
           />
           {suggestions.length > 0 && (
-            <ul className="suggestionsList">
-              {suggestions.map((suggestion, index) => (
-                <li 
-                  key={index} 
-                  onClick={() => handleSuggestionClick(suggestion)}
-                  className="suggestionItem"
-                >
-                  {suggestion.name}
-                </li>
-              ))}
-            </ul>
+            <div className="suggestion-input--container">
+
+              <ul className="suggestion-input--list">
+                    {suggestions.map((suggestion, index) => (
+                      <li 
+                        key={index} 
+                        onClick={() => handleSuggestionClick(suggestion)}
+                        className="suggestion-input--item"
+                      >
+                        <span className="suggestion-input--name">{suggestion.name}</span>
+                        <span className="suggestion-input--category">{suggestion.category}</span>
+                        <span className="suggestion-input--color">{suggestion.color}</span>
+                        <span className="suggestion-input--price">${suggestion.price}</span>
+                      </li>
+                    ))}
+                  </ul>
+            </div>
+
           )}
         </div>
 
