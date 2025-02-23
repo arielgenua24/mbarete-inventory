@@ -3,9 +3,10 @@ import searchProducts from '../../utils/searchFn';
 import useFirestoreContext from '../../hooks/useFirestoreContext';
 import LoadingComponent from '../../components/Loading';
 import showSuggestionNotification from '../../utils/showSuggestionNotification';
+import ImageModal from '../ImageModal';
 import './styles.css';
 
-function ProductFormModal({ handleSubmit, newProduct, setNewProduct, setIsModalOpen }) {
+function ProductFormModal({ handleSubmit, newProduct, setNewProduct, setIsModalOpen, setImages }) {
   const [suggestions, setSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false)
   const [products, setProducts] = useState([]);
@@ -22,6 +23,9 @@ function ProductFormModal({ handleSubmit, newProduct, setNewProduct, setIsModalO
     };
     loadProducts();
   }, []);
+
+
+  
 
 
   const handleNameChange = async (e) => {
@@ -61,6 +65,7 @@ function ProductFormModal({ handleSubmit, newProduct, setNewProduct, setIsModalO
 
   return (
     <div className="modal">
+
       {isLoading && LoadingComponent}
       <form onSubmit={handleSubmit} className="modalContent">
         <h3 className="subtitle">Nuevo Producto</h3>
@@ -70,8 +75,8 @@ function ProductFormModal({ handleSubmit, newProduct, setNewProduct, setIsModalO
           <label className="label">Nombre del producto</label>
           <input
             type="text"
-            //this in is broken after chosing a recommendation
-            value={suggestion.name || newProduct.name}
+            //this in is broken after chosing a recommendation, it doesn't work after chosing a product
+            value={newProduct.name}
             onChange={handleNameChange}
             className="input"
           />
@@ -146,6 +151,7 @@ function ProductFormModal({ handleSubmit, newProduct, setNewProduct, setIsModalO
           </button>
         </div>
       </form>
+      <ImageModal setImages={setImages}/>
     </div>
   );
 }

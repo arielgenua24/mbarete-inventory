@@ -28,6 +28,11 @@ const Inventory = () => {
     color: '',
     stock: ''
   });
+   const [images, setImages] = useState({
+        image1: '',
+        image2: '',
+        image3: ''
+  });
   
   const navigate = useNavigate();
   const { getProducts, addProduct, deleteProduct, user } = useFirestoreContext();
@@ -56,6 +61,7 @@ const Inventory = () => {
     //reset newProduct state
     setNewProduct({ name: '', price: '', size: '', color: '', category: '' ,stock: '' });
     setIsLoading(false);
+    console.log(images)
   };
   const handleDelete = async (productId) => {
     if (window.confirm('¿Estás seguro de que deseas eliminar este producto?')) {
@@ -162,7 +168,7 @@ const Inventory = () => {
       </button>
 
       {isModalOpen && (
-        <ProductFormModal handleSubmit={handleSubmit} newProduct={newProduct} setNewProduct={setNewProduct} setIsModalOpen={setIsModalOpen}/>
+        <ProductFormModal handleSubmit={handleSubmit} newProduct={newProduct} setNewProduct={setNewProduct} setIsModalOpen={setIsModalOpen} setImages={setImages}/>
       )}
 
       {QRcode && (
