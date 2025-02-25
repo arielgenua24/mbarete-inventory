@@ -52,14 +52,15 @@ const Inventory = () => {
   const handleSubmit = async (e) => {
     setIsLoading(true);
     e.preventDefault();
-    uploadImages(images.image1, images.image2, images.image3);
+    const imageURLs = uploadImages(images.image1, images.image2, images.image3);
+    
     return null
     await addProduct(newProduct.name, newProduct.price, newProduct.size, newProduct.color, newProduct.category, newProduct.stock);
     setIsModalOpen(false);
     const updatedProducts = await getProducts();
     setProducts(updatedProducts);
     //reset newProduct state
-    setNewProduct({ name: '', price: '', size: '', color: '', category: '' ,stock: '' });
+    setNewProduct({ name: '', price: '', size: '', color: '', category: '' ,stock: '', image1: '', image2: '', image3: ''});
     setIsLoading(false);
     console.log(images)
   };

@@ -6,6 +6,8 @@ const imagekit = new ImageKit({
 });
 
 async function uploadImages(image1, image2, image3) {
+    const imagesURls = [];
+
   // Usa el endpoint de autenticación en modo de pruebas
   const authenticationEndpoint = "http://localhost:3001/auth";
   // Para producción (si el backend y el frontend están en el mismo dominio)
@@ -70,6 +72,7 @@ async function uploadImages(image1, image2, image3) {
       uploadFile(image3)
     ]);
 
+    console.log("Imagenes subidas:", uploadResults);
     return uploadResults;
   } catch (error) {
     console.error("Error en la autenticación o al subir imágenes:", error);
