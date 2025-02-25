@@ -9,12 +9,10 @@ import QRButton from '../../components/QrGenerateBtn';
 import LoadingComponent from '../../components/Loading';
 import { auth } from '../../firebaseSetUp';
 import qrIcon from '../../assets/icons/icons8-qr-100.png';
-
-
+import uploadImages from '../../services/uploadImage';
 
 
 import './styles.css';
-import { set } from 'date-fns';
 
 const Inventory = () => {
   const [products, setProducts] = useState([]);
@@ -54,6 +52,8 @@ const Inventory = () => {
   const handleSubmit = async (e) => {
     setIsLoading(true);
     e.preventDefault();
+    uploadImages(images.image1, images.image2, images.image3);
+    return null
     await addProduct(newProduct.name, newProduct.price, newProduct.size, newProduct.color, newProduct.category, newProduct.stock);
     setIsModalOpen(false);
     const updatedProducts = await getProducts();
