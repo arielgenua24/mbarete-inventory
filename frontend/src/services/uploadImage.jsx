@@ -1,9 +1,31 @@
 import ImageKit from "imagekit-javascript";
+import Compressor from 'compressorjs';
 
 const imagekit = new ImageKit({
   publicKey: "public_JJwG1EFYua4sXmfsyaNxIizE/DQ=",
   urlEndpoint: "https://ik.imagekit.io/arielgenua",
 });
+
+// Función para comprimir una imagen
+const compressImage = (file) => {
+    return new Promise((resolve, reject) => {
+      new Compressor(file, {
+        quality: 0.6, // Calidad de compresión (0.6 = 60%, ajusta según necesites)
+        maxWidth: 1024, // Ancho máximo (opcional)
+        maxHeight: 1024, // Alto máximo (opcional)
+        mimeType: "image/jpeg", // Tipo de archivo de salida (puedes usar 'image/png' si prefieres)
+        success(compressedFile) {
+          resolve(compressedFile);
+        },
+        error(err) {
+          console.error("Error al comprimir la imagen:", err);
+          reject(err);
+        },
+      });
+    });
+  };
+
+
 
 async function uploadImages(image1, image2, image3) {
     const imagesURls = [];
@@ -65,14 +87,18 @@ async function uploadImages(image1, image2, image3) {
   };
 
   try {
-    // Subimos las 3 imágenes de forma concurrente
+    // Comprimimos las imágenes antes de subirlas
+    const compressedImage1 = await compressImage(image1);
+    const compressedImage2 = await compressImage(image2);
+    const compressedImage3 = await compressImage(image3);
+
+    // Subimos las imágenes comprimidas de forma concurrente
     const uploadResults = await Promise.all([
-      uploadFile(image1),
-      uploadFile(image2),
-      uploadFile(image3)
+      uploadFile(compressedImage1),
+      uploadFile(compressedImage2),
+      uploadFile(compressedImage3),
     ]);
 
-    console.log("Imagenes subidas:", uploadResults);
     return uploadResults;
   } catch (error) {
     console.error("Error en la autenticación o al subir imágenes:", error);

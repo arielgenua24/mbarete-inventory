@@ -50,12 +50,13 @@ const Inventory = () => {
   }, []);
 
   const handleSubmit = async (e) => {
+    console.log(images.image1, images.image2, images.image3)
+    if(images.image1 === '' || images.image2 === '' || images.image3 === '') return alert('Por favor, sube las 3 imágenes del producto, o al menos repite la imagen');
     setIsLoading(true);
     e.preventDefault();
-    const imageURLs = uploadImages(images.image1, images.image2, images.image3);
-    
-    return null
-    await addProduct(newProduct.name, newProduct.price, newProduct.size, newProduct.color, newProduct.category, newProduct.stock);
+    console.log(images.image1, images.image2, images.image3)
+    const imageURLs = await uploadImages(images.image1, images.image2, images.image3);
+    await addProduct(newProduct.name, newProduct.price, newProduct.size, newProduct.color, newProduct.category, newProduct.stock, imageURLs[0].url, imageURLs[1].url, imageURLs[2].url);
     setIsModalOpen(false);
     const updatedProducts = await getProducts();
     setProducts(updatedProducts);

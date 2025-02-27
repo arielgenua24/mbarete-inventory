@@ -25,7 +25,7 @@ const useFirestore = () => {
   const formattedDate = format(currentDate, 'yyyy-MM-dd HH:mm:ss', { locale: es });
 
   //OKAY, producto agregado
-  const addProduct = async (name, price, size, color, category, stock) => {
+  const addProduct = async (name, price, size, color, category, stock, image1, image2, image3) => {
     try {
         //obtenemos el codigo de el producto
     const productCode = await incrementProductCode();  
@@ -39,6 +39,9 @@ const useFirestore = () => {
         color,
         category,
         stock,
+        image1,
+        image2,
+        image3,
         updatedAt: formattedDate,
       });
       console.log("Producto agregado con ID: ", docRef.id);
