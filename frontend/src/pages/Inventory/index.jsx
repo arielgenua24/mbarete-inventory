@@ -137,6 +137,42 @@ const Inventory = () => {
                     ELIMINAR
                 </button>
               </div>
+          
+              <div style={{
+                    width: '90%',
+                    height: '100px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    gap: '10px',
+                    padding: '10px',
+                    margin: '0 auto',
+                    backgroundColor: '#f5f5f7',
+                    borderRadius: '12px',
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                  }}>
+                    {[product.image1, product.image2, product.image3].map((image, index) => (
+                      <img
+                        key={index}
+                        src={image}
+                        alt={`Product view ${index + 1}`}
+                        style={{
+                          width: '100px',
+                          height: '100px',
+                          objectFit: 'cover',
+                          borderRadius: '8px',
+                          border: '2px solid #f5f5f7',
+                          transition: 'transform 0.2s ease',
+                          cursor: 'pointer',
+                        }}
+                        onMouseOver={(e) => {
+                          e.target.style.transform = 'scale(1.1)';
+                        }}
+                        onMouseOut={(e) => {
+                          e.target.style.transform = 'scale(1)';
+                        }}
+                      />
+                    ))}
+                  </div>
 
                 <h3 className="productTitle">{product.name}</h3>
                 <p className="productDetail">{product.productCode}</p>
