@@ -150,7 +150,7 @@ const Inventory = () => {
                     borderRadius: '12px',
                     boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
                   }}>
-                    {[product.image1, product.image2, product.image3].map((image, index) => (
+                    {/*[product.image1, product.image2, product.image3].map((image, index) => (
                       <img
                         key={index}
                         src={image}
@@ -171,7 +171,7 @@ const Inventory = () => {
                           e.target.style.transform = 'scale(1)';
                         }}
                       />
-                    ))}
+                    ))*/}
                   </div>
 
                 <h3 className="productTitle">{product.name}</h3>

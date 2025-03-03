@@ -55,10 +55,6 @@ function Product() {
   }, [getProduct, id, newSavedProduct]);
 
 
-  const changeImages = () => {
-
-  }
-
   const loadImages = async () => {
     // Crear una copia del objeto para actualizar
     const updatedImages = { ...images };
@@ -106,8 +102,6 @@ function Product() {
   };
   
 
-  
-
   const handleInputChange = (setter) => (e) => {
     setter(e.target.value);
     setChanges(true);
@@ -121,7 +115,6 @@ function Product() {
     const updatedImages = await loadImages();
     console.log('images', updatedImages) 
 
-    return null
     const updatedProduct = {
       id,
       name,
@@ -129,10 +122,14 @@ function Product() {
       stock,
       size,
       color,
+      image1: updatedImages[0].image,
+      image2: updatedImages[1].image,
+      image3: updatedImages[2].image,
       updatedAt: formattedDate,
     };
     try {
       await updateProduct(updatedProduct.id, updatedProduct);
+      console.log('productos agregados')
       setIsLoading(false);
       navigate('/inventory');
     } catch (error) {
