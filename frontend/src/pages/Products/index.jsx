@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import useFirestoreContext from '../../hooks/useFirestoreContext';
 import LoadingComponent from "../../components/Loading";
 import ImageModal from "../../modals/ImageModal";
+import uploadImages from "../../services/uploadImage";
 import { format, set } from 'date-fns';
 import { es } from 'date-fns/locale';
 import './styles.css';
@@ -26,6 +27,7 @@ function Product() {
   const [images, setImages] = useState([]);
   const [oldImages, setOldImages] = useState([]);
   const [newImages, setNewImages] = useState([]);
+  const [imagePostitions, setImagePositions] = useState([]);
 
 
   useEffect(() => {
@@ -53,9 +55,58 @@ function Product() {
   }, [getProduct, id, newSavedProduct]);
 
 
-  const changedImage = (image) => {
-      
+  const changeImages = () => {
+
   }
+
+  const loadImages = async () => {
+    // Crear una copia del objeto para actualizar
+    const updatedImages = { ...images };
+    const uploadPromises = [];
+  
+    for (let i = 1; i <= 3; i++) {
+      const key = `image${i}`;
+      if (newImages[key]) {
+        // Extraer el índice correspondiente (por ejemplo, 'image2' → índice 1)
+        const index = i - 1;
+  
+        // Colocar un placeholder en la posición mientras se sube la imagen
+        updatedImages[index] = { image: '' };
+  
+        const uploadPromise = uploadImages(newImages[key]).then((newUrl) => {
+          let finalUrl = '';
+  
+          // Si newUrl es un arreglo y tiene al menos un elemento, extraemos la propiedad url del primer objeto
+          if (Array.isArray(newUrl) && newUrl.length > 0) {
+            finalUrl = newUrl[0].url;
+          } 
+          // Si newUrl es un objeto que contiene la propiedad url, la usamos directamente
+          else if (newUrl && newUrl.url) {
+            finalUrl = newUrl.url;
+          } 
+          // En otro caso, asumimos que newUrl ya es un string de la URL
+          else {
+            finalUrl = newUrl;
+          }
+          
+          // Actualizamos la URL en la posición correcta con la estructura deseada
+          updatedImages[index] = { image: finalUrl };
+        });
+  
+        uploadPromises.push(uploadPromise);
+      }
+    }
+  
+    // Esperar a que todas las cargas finalicen
+    await Promise.all(uploadPromises);
+  
+    // Actualizar el estado con el objeto actualizado
+    setImages(updatedImages);
+    return updatedImages;
+  };
+  
+
+  
 
   const handleInputChange = (setter) => (e) => {
     setter(e.target.value);
@@ -67,7 +118,10 @@ function Product() {
     e.preventDefault();
     const currentDate = new Date();
     const formattedDate = format(currentDate, 'yyyy-MM-dd HH:mm:ss', { locale: es });
+    const updatedImages = await loadImages();
+    console.log('images', updatedImages) 
 
+    return null
     const updatedProduct = {
       id,
       name,
@@ -95,7 +149,7 @@ function Product() {
       {isLoading && <LoadingComponent />}
       <h1 className="product-title">Producto</h1>
 
-      <ImageModal setImages={setImages} imagesToUpdate={images} setNewImages={setNewImages}/>
+      <ImageModal setImages={setImages} imagesToUpdate={images} setNewImages={setNewImages} setChanges={setChanges}/>
 
       <form className="product-card" onSubmit={handleSubmit}>
         <div className="product-card">

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import './styles.css';
 
-const ImageModal = ({ setImages, imagesToUpdate, setNewImages }) => {
+const ImageModal = ({ setImages, imagesToUpdate, setNewImages, setChanges }) => {
   const [previews, setPreviews] = useState({
     image1: '',
     image2: '',
@@ -56,9 +56,11 @@ const ImageModal = ({ setImages, imagesToUpdate, setNewImages }) => {
       }));
 
       if(imagesToUpdate) {
+        setChanges(true);
+
         setNewImages(prev => ({
           ...prev,
-          [imageKey]: file
+          [`${imageKey}`]: file
         }));
       }   
       
