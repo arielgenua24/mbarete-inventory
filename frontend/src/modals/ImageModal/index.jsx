@@ -1,20 +1,50 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import './styles.css';
 
-const ImageModal = ({setImages}) => {
-
+const ImageModal = ({ setImages, imagesToUpdate, setNewImages }) => {
   const [previews, setPreviews] = useState({
     image1: '',
     image2: '',
     image3: ''
   });
 
+  // Inicializar previews con imagesToUpdate si existe
+  useEffect(() => {
+    if (imagesToUpdate && Array.isArray(imagesToUpdate)) {
+      const newPreviews = { ...previews };
+      
+      // Mapear las imágenes del array a los previews correspondientes
+      imagesToUpdate.forEach((item, index) => {
+        if (item && item.image && index < 3) {
+          const imageKey = `image${index + 1}`;
+          newPreviews[imageKey] = item.image;
+        }
+      });
+      
+      setPreviews(newPreviews);
+      
+      // También actualizar el estado de imágenes si setImages está disponible
+      /* if (setImages) {
+        const updatedImages = {};
+        imagesToUpdate.forEach((item, index) => {
+          if (item && item.image && index < 3) {
+            const imageKey = `image${index + 1}`;
+            updatedImages[imageKey] = item.image;
+          }
+        });
+        setImages(prev => ({
+          ...prev,
+          ...updatedImages
+        }));
+      }*/
+    }
+  }, [imagesToUpdate]);
 
   const handleImageUpload = (e, imageKey) => {
     const file = e.target.files[0];
     if (file) {
-      setImages(prev => ({ //aqui me da el error
+      setImages(prev => ({
         ...prev,
         [imageKey]: file
       }));
@@ -24,19 +54,29 @@ const ImageModal = ({setImages}) => {
         ...prev,
         [imageKey]: previewUrl
       }));
+
+      if(imagesToUpdate) {
+        setNewImages(prev => ({
+          ...prev,
+          [imageKey]: file
+        }));
+      }   
+      
     }
   };
 
-
   const handleRemoveImage = (imageKey) => {
+    
     setImages(prev => ({
       ...prev,
-      [imageKey]: null
+      [imageKey]: ''
     }));
     
-    if (previews[imageKey]) {
+    // Solo revocar URL si es un objeto URL creado por createObjectURL
+    if (previews[imageKey] && typeof previews[imageKey] === 'string' && previews[imageKey].startsWith('blob:')) {
       URL.revokeObjectURL(previews[imageKey]);
     }
+    
     setPreviews(prev => ({
       ...prev,
       [imageKey]: ''
@@ -85,7 +125,6 @@ const ImageModal = ({setImages}) => {
           );
         })}
       </div>
-
     </div>
   );
 };

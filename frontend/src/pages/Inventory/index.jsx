@@ -55,7 +55,7 @@ const Inventory = () => {
     setIsLoading(true);
     e.preventDefault();
     console.log(images.image1, images.image2, images.image3)
-    const imageURLs = await uploadImages(images.image1, images.image2, images.image3);
+    const imageURLs = await uploadImages([images.image1, images.image2, images.image3]);
     await addProduct(newProduct.name, newProduct.price, newProduct.size, newProduct.color, newProduct.category, newProduct.stock, imageURLs[0].url, imageURLs[1].url, imageURLs[2].url);
     setIsModalOpen(false);
     const updatedProducts = await getProducts();

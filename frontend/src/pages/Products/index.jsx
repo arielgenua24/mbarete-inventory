@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useFirestoreContext from '../../hooks/useFirestoreContext';
 import LoadingComponent from "../../components/Loading";
+import ImageModal from "../../modals/ImageModal";
 import { format, set } from 'date-fns';
 import { es } from 'date-fns/locale';
 import './styles.css';
@@ -22,6 +23,10 @@ function Product() {
   const [stock, setStock] = useState(product.stock);
   const [size, setSize] = useState(product.size);
   const [color, setColor] = useState(product.color);
+  const [images, setImages] = useState([]);
+  const [oldImages, setOldImages] = useState([]);
+  const [newImages, setNewImages] = useState([]);
+
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -40,10 +45,17 @@ function Product() {
       setStock(fetchedProduct.stock);
       setSize(fetchedProduct.size);
       setColor(fetchedProduct.color);
+      setImages(() => ([{ image: fetchedProduct.image1}, {image: fetchedProduct.image2}, {image: fetchedProduct.image3}]));      
+      setOldImages(() => ([{ image: fetchedProduct.image1}, {image: fetchedProduct.image2}, {image: fetchedProduct.image3}]));
       setIsLoading(false);
     };
     loadProducts();
   }, [getProduct, id, newSavedProduct]);
+
+
+  const changedImage = (image) => {
+      
+  }
 
   const handleInputChange = (setter) => (e) => {
     setter(e.target.value);
@@ -74,12 +86,17 @@ function Product() {
       console.error("Error al actualizar el producto:", error);
     }
   };
-
+ 
+  console.log(oldImages)
+  console.log(newImages)
 
   return (
     <div className="form-container">
       {isLoading && <LoadingComponent />}
       <h1 className="product-title">Producto</h1>
+
+      <ImageModal setImages={setImages} imagesToUpdate={images} setNewImages={setNewImages}/>
+
       <form className="product-card" onSubmit={handleSubmit}>
         <div className="product-card">
           <div className="input-group">
