@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import './styles.css';
 
-const ImageModal = ({ setImages, imagesToUpdate, setNewImages, setChanges }) => {
+const ImageModal = ({ setImages, imagesToUpdate, setNewImages, setChanges, suggestedImages }) => {
   const [previews, setPreviews] = useState({
     image1: '',
     image2: '',
@@ -39,6 +39,11 @@ const ImageModal = ({ setImages, imagesToUpdate, setNewImages, setChanges }) => 
         }));
       }*/
     }
+
+    if (suggestedImages) {
+      console.log(suggestedImages)
+    }
+
   }, [imagesToUpdate]);
 
   const handleImageUpload = (e, imageKey) => {
@@ -89,6 +94,16 @@ const ImageModal = ({ setImages, imagesToUpdate, setNewImages, setChanges }) => 
     <div className="image-form--container">
       <h2 className="image-form--title">Subir Imágenes</h2>
       
+      <div className="image-form--warning">
+        ⚠️ Importante: Agregue las imágenes del producto 
+        
+        <strong> solo si aún no las ha cargado 
+        al registrar otros talles del mismo producto.</strong> 
+        <br />
+        Este es porque Las imágenes se comparten entre todas las variantes 
+        del mismo producto para facilitar tu experiencia.
+      </div>
+
       <div className="image-form--grid">
         {[1, 2, 3].map((num) => {
           const imageKey = `image${num}`;

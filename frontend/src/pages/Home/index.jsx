@@ -25,16 +25,7 @@ function Home() {
 
     return (
         <div className="home-container">
-            <h1 className="home-title" 
-                style={
-                    {fontSize: '30px', 
-                    textAlign: 'center', 
-                    marginBottom: '20px', 
-                    color: '#c4c4c4', 
-                    position: 'absolute',
-                    padding: '20px',
-                    top: '13px'
-                    }}>
+            <h1 className="home-title" >
                     Hola Majo! que te gustaria hacer hoy ?
                 </h1>
 
@@ -69,9 +60,12 @@ function Home() {
 
             <Link to="/inventory" className="home-link">
                 <button className="home-btn catalog">
-                    <Package size={24} className="home-icon" />
-                    <h1 style={{fontSize: '400', color: '#04e9a2'}} >Catálogo</h1>
-                    <span className="home-subtext">Agrega y controla los productos de tu pagina</span>
+                    <div style={{display: 'flex', alignItems: 'center', flexDirection: 'row ', width: '100%', gap: 'calc(1rem + 1vw)'}}>
+                        <Package size={24} className="home-icon" />
+                        <h1 className='catalog-title' >Catálogo</h1>
+                    </div>
+                    
+                    <span className="home-subtext">Agrega y controla los productos de tu pagina.</span>
                 </button>
             </Link>
         </div>

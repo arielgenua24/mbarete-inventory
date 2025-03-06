@@ -138,41 +138,59 @@ const Inventory = () => {
                 </button>
               </div>
           
-              <div style={{
-                    width: '90%',
-                    height: '100px',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    gap: '10px',
-                    padding: '10px',
-                    margin: '0 auto',
-                    backgroundColor: '#f5f5f7',
-                    borderRadius: '12px',
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-                  }}>
-                    {/*[product.image1, product.image2, product.image3].map((image, index) => (
-                      <img
-                        key={index}
-                        src={image}
-                        alt={`Product view ${index + 1}`}
-                        style={{
-                          width: '100px',
-                          height: '100px',
-                          objectFit: 'cover',
-                          borderRadius: '8px',
-                          border: '2px solid #f5f5f7',
-                          transition: 'transform 0.2s ease',
-                          cursor: 'pointer',
-                        }}
-                        onMouseOver={(e) => {
-                          e.target.style.transform = 'scale(1.1)';
-                        }}
-                        onMouseOut={(e) => {
-                          e.target.style.transform = 'scale(1)';
-                        }}
-                      />
-                    ))*/}
-                  </div>
+          {product.image1 && (
+             <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}> 
+             <span style={{
+                  backgroundColor: '#f1f1f1',
+                  color: '#333',
+                  padding: '1rem',
+                  borderRadius: '4px',
+                  marginBottom: '1rem',
+                  fontSize: '0.9rem',
+                  lineHeight: 1.5,
+                  textAlign: 'center'
+                }}>Este producto posee imagenes, actualizas desde aqui para cambiarlas y que afectea a todas sus variantes.</span>
+            <div style={{
+                        width: '90%',
+                        height: '100px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        gap: '10px',
+                        padding: '10px',
+                        margin: '0 auto',
+                        backgroundColor: '#f5f5f7',
+                        borderRadius: '12px',
+                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                      }}>
+                        {[product.image1, product.image2, product.image3].map((image, index) => (
+                          <img
+                            key={index}
+                            src={image}
+                            alt={`Product view ${index + 1}`}
+                            style={{
+                              width: '100px',
+                              height: '100px',
+                              objectFit: 'cover',
+                              borderRadius: '8px',
+                              border: '2px solid #f5f5f7',
+                              transition: 'transform 0.2s ease',
+                              cursor: 'pointer',
+                            }}
+                            onMouseOver={(e) => {
+                              e.target.style.transform = 'scale(1.1)';
+                            }}
+                            onMouseOut={(e) => {
+                              e.target.style.transform = 'scale(1)';
+                            }}
+                          />
+                        ))}
+                      
+              </div>
+          </div>
+          )}
+         
+          
+              
 
                 <h3 className="productTitle">{product.name}</h3>
                 <p className="productDetail">{product.productCode}</p>
@@ -206,7 +224,7 @@ const Inventory = () => {
       </button>
 
       {isModalOpen && (
-        <ProductFormModal handleSubmit={handleSubmit} newProduct={newProduct} setNewProduct={setNewProduct} setIsModalOpen={setIsModalOpen} setImages={setImages}/>
+        <ProductFormModal handleSubmit={handleSubmit} newProduct={newProduct} setNewProduct={setNewProduct} setIsModalOpen={setIsModalOpen} setImages={setImages} images={images}/>
       )}
 
       {QRcode && (
