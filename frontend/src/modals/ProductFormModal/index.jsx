@@ -57,7 +57,7 @@ function ProductFormModal({ handleSubmit, newProduct, setNewProduct, setIsModalO
       color: suggestion.color,
       category: suggestion.category,
     });
-    setImages({image1: suggestion.image1, image2: suggestion.image2, image3: suggestion.image3});
+     // setImages({image1: suggestion.image1, image2: suggestion.image2, image3: suggestion.image3});
     setSuggestions([]);
     // Mostrar la notificación
     showSuggestionNotification();

@@ -134,7 +134,6 @@ const ImageModal = ({ setImages, imagesToUpdate, setNewImages, setChanges, sugge
                     className="image-form--input"
                     accept="image/*"
                     onChange={(e) => handleImageUpload(e, imageKey)}
-                    required
                   />
                 </label>
               )}

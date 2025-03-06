@@ -25,7 +25,57 @@ const useFirestore = () => {
   const formattedDate = format(currentDate, 'yyyy-MM-dd HH:mm:ss', { locale: es });
 
   //OKAY, producto agregado
-  const addProduct = async (name, price, size, color, category, stock, image1, image2, image3) => {
+  
+
+async function addProduct(
+  name,
+  price,
+  size,
+  color,
+  category,
+  stock,
+  image1,
+  image2,
+  image3,
+  formattedDate
+) {
+  try {
+    const productCode = await incrementProductCode();  
+
+    // Construimos el objeto de datos base
+    const data = {
+      productCode,
+      name,
+      price,
+      size,
+      color,
+      category,
+      stock,   
+     };
+  
+    // Agregamos las imágenes solo si existen
+    if (image1 !== undefined) data.image1 = image1;
+    if (image2 !== undefined) data.image2 = image2;
+    if (image3 !== undefined) data.image3 = image3;
+  
+    console.log(productCode, name, price, size, color, category, stock, image1, image2, image3);
+
+    // Agregamos el documento a la colección "products"
+    
+      const docRef = await addDoc(collection(db, "products"), data);
+      console.log("Documento agregado con ID:", docRef.id);
+      return docRef;
+    
+  } catch (error) {
+      console.error(error)
+  }
+ 
+}
+
+
+
+  /*const addProduct = async (name, price, size, color, category, stock, image1, image2, image3) => {
+    console.log(name, price, size, color, category, stock, image1, image2, image3);
     try {
         //obtenemos el codigo de el producto
     const productCode = await incrementProductCode();  
@@ -50,7 +100,7 @@ const useFirestore = () => {
     } catch (e) {
       console.error("Error agregando producto: ", e);
     }
-  };
+  }; */
 
   /*const addProduct = async (name, price, category, specialTag, images, sizes) => {
     try {

@@ -50,21 +50,66 @@ const Inventory = () => {
   }, []);
 
   const handleSubmit = async (e) => {
-    console.log(images.image1, images.image2, images.image3)
-    if(images.image1 === '' || images.image2 === '' || images.image3 === '') return alert('Por favor, sube las 3 imágenes del producto, o al menos repite la imagen');
-    setIsLoading(true);
     e.preventDefault();
-    console.log(images.image1, images.image2, images.image3)
-    const imageURLs = await uploadImages([images.image1, images.image2, images.image3]);
-    await addProduct(newProduct.name, newProduct.price, newProduct.size, newProduct.color, newProduct.category, newProduct.stock, imageURLs[0].url, imageURLs[1].url, imageURLs[2].url);
+    setIsLoading(true);
+  
+    let imageURLs = [];
+  
+    // Si existe al menos una imagen, se suben las que no sean vacías.
+    if (images.image1 || images.image2 || images.image3) {
+      const imagesToUpload = [images.image1, images.image2, images.image3].filter((img) => img !== '');
+      imageURLs = await uploadImages(imagesToUpload);
+  
+      // Completar hasta tres elementos en caso de faltar alguno.
+      while (imageURLs.length < 3) {
+        imageURLs.push({ url: undefined });
+      }
+    }
+  
+    // Se llama a addProduct según se hayan subido imágenes o no.
+    if (imageURLs.length > 0) {
+      await addProduct(
+        newProduct.name,
+        newProduct.price,
+        newProduct.size,
+        newProduct.color,
+        newProduct.category,
+        newProduct.stock,
+        imageURLs[0].url,
+        imageURLs[1].url,
+        imageURLs[2].url
+      );
+    } else {
+      await addProduct(
+        newProduct.name,
+        newProduct.price,
+        newProduct.size,
+        newProduct.color,
+        newProduct.category,
+        newProduct.stock
+      );
+    }
+  
     setIsModalOpen(false);
     const updatedProducts = await getProducts();
     setProducts(updatedProducts);
-    //reset newProduct state
-    setNewProduct({ name: '', price: '', size: '', color: '', category: '' ,stock: '', image1: '', image2: '', image3: ''});
+  
+    // Resetea el estado del nuevo producto.
+    setNewProduct({
+      name: '',
+      price: '',
+      size: '',
+      color: '',
+      category: '',
+      stock: '',
+      image1: '',
+      image2: '',
+      image3: '',
+    });
     setIsLoading(false);
-    console.log(images)
   };
+  
+  
   const handleDelete = async (productId) => {
     if (window.confirm('¿Estás seguro de que deseas eliminar este producto?')) {
       try {
