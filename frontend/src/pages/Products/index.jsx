@@ -34,6 +34,7 @@ function Product() {
     const loadProducts = async () => {
       setIsLoading(true);
      
+      console.log(images)
       const fetchedProduct = await getProduct(id);
       if (fetchedProduct === undefined) {
         alert('El producto no existe');
@@ -112,8 +113,8 @@ function Product() {
     e.preventDefault();
     const currentDate = new Date();
     const formattedDate = format(currentDate, 'yyyy-MM-dd HH:mm:ss', { locale: es });
-    const updatedImages = await loadImages();
-    console.log('images', updatedImages) 
+    
+    console.log(newImages);
 
     const updatedProduct = {
       id,
@@ -122,11 +123,34 @@ function Product() {
       stock,
       size,
       color,
-      image1: updatedImages[0].image,
-      image2: updatedImages[1].image,
-      image3: updatedImages[2].image,
       updatedAt: formattedDate,
     };
+
+    //if there are images to replace
+    const updatedImages = await loadImages();
+    console.log('images', updatedImages);
+
+    if (oldImages[0]?.image !== undefined || !!newImages.image1) {
+      updatedProduct.image1 = updatedImages[0]?.image;
+      console.log('image1 actualizada:', updatedProduct.image1);
+    }
+
+    if (oldImages[1]?.image !== undefined || !!newImages.image2 ) {
+      updatedProduct.image2 = updatedImages[1]?.image;
+      console.log('image2 actualizada:', updatedProduct.image2);
+    }
+
+    if (oldImages[2]?.image !== undefined || !!newImages.image3) {
+      updatedProduct.image3 = updatedImages[2]?.image;
+      console.log('image3 actualizada:', updatedProduct.image3);
+    }
+
+    console.log('updatedProduct después de agregar imágenes:', updatedProduct);
+
+
+    console.log('updatedProduct', updatedProduct)
+
+  
     try {
       await updateProduct(updatedProduct.id, updatedProduct);
       console.log('productos agregados')
@@ -146,7 +170,8 @@ function Product() {
       {isLoading && <LoadingComponent />}
       <h1 className="product-title">Producto</h1>
 
-      <ImageModal setImages={setImages} imagesToUpdate={images} setNewImages={setNewImages} setChanges={setChanges}/>
+      {oldImages[0]?.image && (<ImageModal setImages={setImages} imagesToUpdate={images} setNewImages={setNewImages} setChanges={setChanges}/>)}
+      
 
       <form className="product-card" onSubmit={handleSubmit}>
         <div className="product-card">
