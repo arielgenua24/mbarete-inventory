@@ -127,6 +127,9 @@ function ProductFormModal({ handleSubmit, newProduct, setNewProduct, setIsModalO
                   ? 'Cantidad en inventario'
                   : field}
               </label>
+              {field === 'category' && <div className="advice-input">
+                🤔<strong>Cuidado con las palabras</strong>, unicas categorias permitidas: bermuda | jean | baggy | Clásico | ReIngreso | joggers | parachutte | frisa
+              </div>}
               <input
                 type={field === 'price' || field === 'stock' ? 'number' : 'text'}
                 value={newProduct[field]}
@@ -138,6 +141,11 @@ function ProductFormModal({ handleSubmit, newProduct, setNewProduct, setIsModalO
                 }
                 className="input"
                 required
+                {...(field === 'category' && {
+                  pattern: "^(bermuda|jean|baggy|Clásico|ReIngreso|joggers|parachutte|frisa)$",
+                  title:
+                    "Solo puede escribir: bermuda, jean, baggy, Clásico, ReIngreso, joggers, parachutte, frisa",
+                })}
               />
             </div>
           ))}

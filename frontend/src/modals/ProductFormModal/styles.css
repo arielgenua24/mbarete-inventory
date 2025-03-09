@@ -287,6 +287,17 @@
   min-height: 44px;
 }
 
+.advice-input {
+  margin-bottom: 8px;
+  padding: 10px;
+  border: 1px solid #d1d1d6;
+  border-radius: 8px;
+  background-color: #f2f2f7;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #1c1c1e;
+  font-size: 14px;
+}
+
 /* ===== MEDIA QUERIES ===== */
 /* Tablet (768px y superior) */
 @media (min-width: 768px) {
