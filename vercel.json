@@ -1,0 +1,16 @@
+{
+  "buildCommand": "cd frontend && npm install && npm run build",
+  "outputDirectory": "frontend/dist",
+  "rewrites": [
+    {
+      "source": "/auth",
+      "destination": "/api/auth"
+    }
+  ],
+  "functions": {
+    "api/auth.js": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  }
+}

@@ -29,8 +29,9 @@ const compressImage = (file) => {
 
   async function uploadImages(images) {
     // Usa el endpoint de autenticación en modo de pruebas
-    const authenticationEndpoint = "http://localhost:3001/auth";
-    // Para producción (si el backend y el frontend están en el mismo dominio)
+    const authenticationEndpoint = window.location.hostname === "localhost" 
+    ? "http://localhost:3001/auth" 
+    : "/auth";    // Para producción (si el backend y el frontend están en el mismo dominio)
     // const authenticationEndpoint = "/auth"; o /backend/auth
   
     // Función auxiliar para obtener parámetros de autenticación
