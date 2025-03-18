@@ -1,5 +1,6 @@
 // api/auth.js
 const ImageKit = require('imagekit');
+require('dotenv').config();
 
 module.exports = (req, res) => {
   // Configurar CORS
