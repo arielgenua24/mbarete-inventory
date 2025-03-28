@@ -233,10 +233,6 @@ const Inventory = () => {
               </div>
           </div>
           )}
-         
-          
-              
-
                 <h3 className="productTitle">{product.name}</h3>
                 <p className="productDetail">{product.productCode}</p>
                 <p className="productDetail">Precio: ${product.price}</p>

@@ -122,32 +122,64 @@ function ProductFormModal({ handleSubmit, newProduct, setNewProduct, setIsModalO
                   : field === 'color'
                   ? 'Color'
                   : field === 'category'
-                  ? 'Categoria'
+                  ? 'Categoría'
                   : field === 'stock'
                   ? 'Cantidad en inventario'
                   : field}
               </label>
-              {field === 'category' && <div className="advice-input">
-                🤔<strong>Cuidado con las palabras</strong>, unicas categorias permitidas: bermuda | jean | baggy | Clásico | ReIngreso | joggers | parachutte | frisa
-              </div>}
-              <input
-                type={field === 'price' || field === 'stock' ? 'number' : 'text'}
-                value={newProduct[field]}
-                onChange={(e) =>
-                  setNewProduct({
-                    ...newProduct,
-                    [field]: e.target.value,
-                  })
-                }
-                className="input"
-                required
-                {...(field === 'category' && {
-                  pattern: "^(bermuda|jean|baggy|Clásico|ReIngreso|joggers|parachutte|frisa)$",
-                  title:
-                    "Solo puede escribir: bermuda, jean, baggy, Clásico, ReIngreso, joggers, parachutte, frisa",
-                })}
-              />
-            </div>
+            {field === 'category' && (
+              <>
+                {/* Divs flotantes con las categorías permitidas */}
+                <div className="advice-input">
+                  Majo! Ya no escribas las cateogías, hacé click en la que quieras😉🔥
+                </div>
+                <div className="category-float-container">
+                  {[
+                    "bermuda",
+                    "jean",
+                    "baggy",
+                    "Clásico",
+                    "ReIngreso",
+                    "joggers",
+                    "parachutte",
+                    "frisa",
+                    "Camperas",
+                    "Chalecos",
+                    "Nuevos",
+                    "PocoStock"
+                  ].map((cat) => (
+                    <div
+                      key={cat}
+                      className="category-float"
+                      onClick={() =>
+                        setNewProduct({ ...newProduct, category: cat })
+                      }
+                    >
+                      {cat}
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+            <input
+              type={field === 'price' || field === 'stock' ? 'number' : 'text'}
+              value={newProduct[field]}
+              onChange={(e) =>
+                setNewProduct({
+                  ...newProduct,
+                  [field]: e.target.value,
+                })
+              }
+              className="input"
+              required
+              {...(field === 'category' && {
+                pattern:
+                  "^(bermuda|jean|baggy|Clásico|ReIngreso|joggers|parachutte|frisa|Camperas|Chalecos|Nuevos|PocoStock)$",
+                title:
+                  "Solo puede escribir: bermuda, jean, baggy, Clásico, ReIngreso, joggers, parachutte, frisa, Camperas, Chalecos, Nuevos, PocoStock",
+              })}
+            />
+          </div>
           ))}
 
           <div className="buttonGroup">

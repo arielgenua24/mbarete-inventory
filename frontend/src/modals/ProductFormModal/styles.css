@@ -18,6 +18,29 @@
   --animation-duration: 0.3s;
 }
 
+.category-float-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.category-float {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #f9f9f9;
+  font-size: 0.9rem;
+}
+
+.category-float:hover {
+  background-color: #eaeaea;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
 /* ===== CONTENEDOR PRINCIPAL DEL FORMULARIO ===== */
 .product-form-container {
   display: flex;
@@ -402,3 +425,4 @@
     font-size: 16px;
   }
 }
+
